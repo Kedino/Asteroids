@@ -1,7 +1,7 @@
 import pygame
-from constants import *
-from circleshape import CircleShape
-from player import Player
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT  #import constants
+from circleshape import CircleShape # import CircleShape
+from player import Player   # import Player
 
 #import os
 
@@ -15,6 +15,11 @@ def main():
     print(f"Screen height: {SCREEN_HEIGHT}")
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+
     clock = pygame.time.Clock()
     dt = 0
 
@@ -24,8 +29,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+        updatable.update(dt)
         screen.fill("black")
-        player.draw(screen)
+        for object in drawable:
+            object.draw(screen)
+        #player.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) / 1000
         
