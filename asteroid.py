@@ -3,6 +3,7 @@ import random
 import math
 from constants import ASTEROID_MIN_RADIUS # import constants
 from circleshape import CircleShape  # import CircleShape
+from score import ScoreManager  # import score_manager
 
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
@@ -34,8 +35,10 @@ class Asteroid(CircleShape):
     def update(self, dt):
         self.position += self.velocity * dt
 
-    def split(self):
+    def split(self, score_manager=None):
         self.kill()
+        if score_manager:
+            score_manager.add_score(1)
         if self.radius <= ASTEROID_MIN_RADIUS:
             return
         random_angle = random.uniform(20, 50)
@@ -44,16 +47,6 @@ class Asteroid(CircleShape):
             new_asteroid = Asteroid(self.position.x, self.position.y, new_radius)
             new_asteroid.velocity = self.velocity.rotate(angle) * 1.2
 
-
-        #new_velocity1 = self.velocity.rotate(random_angle)
-        #new_velocity2 = self.velocity.rotate(-random_angle)
-        
-
-        #new_asteroid1 = Asteroid(self.position.x, self.position.y, new_radius)
-        #new_asteroid2 = Asteroid(self.position.x, self.position.y, new_radius)
-
-        #new_asteroid1.velocity = new_velocity1 * 1.2
-        #new_asteroid2.velocity = new_velocity2 * 1.2
 
         
         

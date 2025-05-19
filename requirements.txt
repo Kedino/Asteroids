@@ -1,1 +1,2 @@
+echo "# Dependencies for Asteroids game" >> requirements.txt
 pygame==2.6.1
