@@ -29,7 +29,7 @@ class Asteroid(CircleShape):
             points.append((point_x, point_y))
     
     # Draw the polygon
-        pygame.draw.polygon(screen, "white", points, 2)  # 2 is the line width
+        pygame.draw.polygon(screen, "white", points, 2)  
         #pygame.draw.circle(screen, "white", self.position, self.radius, 2)
         
     def update(self, dt):
@@ -38,7 +38,7 @@ class Asteroid(CircleShape):
     def split(self, score_manager=None):
         self.kill()
         if score_manager:
-            score_manager.add_score(1)
+            score_manager.add_score(10)
         if self.radius <= ASTEROID_MIN_RADIUS:
             return
         random_angle = random.uniform(20, 50)

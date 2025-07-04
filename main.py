@@ -6,11 +6,7 @@ from asteroidfield import AsteroidField # import AsteroidField
 from asteroid import Asteroid # import Asteroid
 from shot import Shot # import Shot
 from score import ScoreManager # import ScoreManager
-
-#import os
-
-#print(f"Current working directory: {os.getcwd()}")
-#print(f"Files in directory: {os.listdir('.')}")
+from clock import GameClockManager # import GameClockManager
 
 def main():
     pygame.init()
@@ -26,12 +22,15 @@ def main():
 
     Player.containers = (updatable, drawable)
     Asteroid.containers = (updatable, drawable, asteroids)
-    AsteroidField.containers = (updatable,)
+    AsteroidField.containers = (updatable)
     Shot.containers = (updatable, drawable, shots)
+    ScoreManager.containers = (drawable)
+    GameClockManager.containers = (drawable, updatable)
 
     clock = pygame.time.Clock()
     dt = 0
     score_manager = ScoreManager()
+    game_clock = GameClockManager(score_manager)
 
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -57,7 +56,6 @@ def main():
         screen.fill("black")
         for object in drawable:
             object.draw(screen)
-        score_manager.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) / 1000
         

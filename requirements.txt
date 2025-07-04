@@ -1,2 +1,3 @@
-echo "# Dependencies for Asteroids game" >> requirements.txt
+# Dependencies for Asteroids game
 pygame==2.6.1
+uv pip install -r requirements.txt
