@@ -2,10 +2,12 @@ import pygame
 from circleshape import CircleShape # import CircleShape
 from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN # import constants
 from shot import Shot # import Shot
+from controls import KEYSET_WASD, KEYSET_ARROWS  # import control keysets
 
 class Player(CircleShape):
-    def __init__(self, x, y):
+    def __init__(self, x, y, controls = None):
         super().__init__(x, y, PLAYER_RADIUS)
+        self.controls = controls
         self.rotation = 180
         self.shot_timer = 0
 
@@ -27,17 +29,17 @@ class Player(CircleShape):
     def update(self, dt):
         self.shot_timer -= dt
         keys = pygame.key.get_pressed()
-        
-        if keys[pygame.K_a]:
-            self.rotate(-dt)
-        if keys[pygame.K_d]:
-            self.rotate(dt)
-        if keys[pygame.K_w]:
-            self.move(dt)
-        if keys[pygame.K_s]:
-            self.move(-dt)
-        if keys[pygame.K_SPACE]:
-            self.shoot()
+        for control in self.controls:
+            if keys[control['left']]:
+                self.rotate(-dt)
+            if keys[control['right']]:
+                self.rotate(dt)
+            if keys[control['forward']]:
+                self.move(dt)
+            if keys[control['backward']]:
+                self.move(-dt)
+            if keys[control['shoot']]:
+                self.shoot()
 
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
